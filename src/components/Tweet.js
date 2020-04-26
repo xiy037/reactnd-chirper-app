@@ -1,17 +1,74 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { formatTweet, formatDate } from '../utils/helpers';
+import { connect } from 'react-redux';
+import { TiArrowBackOutline, TiHeartOutline, TiHeartFullOutline } from 'react-icons/ti'
 
 class Tweet extends React.Component {
 
+  toParent = (e, parentId) => {
+    e.preventDefault();
+    //todo
+  }
+
+  handleLike = (e) => {
+    e.preventDefault();
+    //todo
+  }
+
   render() {
+    const { tweet } = this.props;
+    const {
+      name, avatar, timestamp, text, hasLiked, likes, replies, parent
+    } = tweet
+    console.log(this.props);
     return (
       <NavLink to="/tweet/123">
-        <div className="tweet">
-        Tweet
-        </div>
+
+        {tweet && (
+          <div className="tweet">
+            <img
+              src={avatar}
+              alt={`avatar of ${name}`}
+              className="avatar"
+            />
+            <div className="tweet-info">
+              <div>
+                <div>{name}</div>
+                <div>{formatDate(timestamp)}</div>
+                {parent && (
+                  <button className="replying-to" onClick={(e) => this.toParent(e, parent.id)}>
+                    Replying to @{parent.author}
+                  </button>
+                )}
+                <p>{text}</p>
+              </div>
+              <div className="tweet-icons">
+                <TiArrowBackOutline className="tweet-icon" />
+                <span>{replies > 0 && replies}</span>
+                <button className="heart-button" onClick={this.handleLike}>
+                  {hasLiked === true
+                    ? <TiHeartFullOutline color='#e0245e' className='tweet-icon' />
+                    : <TiHeartOutline className='tweet-icon' />}
+                </button>
+                <span>{likes !== 0 && likes}</span>
+              </div>
+            </div>
+          </div>
+        )}
+
       </NavLink>
     )
   }
 }
 
-export default Tweet;
+const mapStateToProps = ({ tweets, users, authedUser }, { id }) => {
+  const tweet = tweets[id];
+  const parentTweet = tweet ? tweets[tweet.replyingTo] : null;
+  return {
+    authedUser,
+    tweet: tweet ? formatTweet(tweet, users[tweet.author], authedUser, parentTweet) : null
+  }
+}
+
+export default connect(mapStateToProps)(Tweet);

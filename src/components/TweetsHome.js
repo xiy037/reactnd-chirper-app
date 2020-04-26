@@ -5,15 +5,13 @@ import {connect} from 'react-redux';
 class TweetsHome extends React.Component {
 
   render() {
-    console.log(this.props);
     return (
       <div>
         <h3 className='center'>Your Timeline</h3>
         <ul className='dashboard-list'>
           {this.props.tweetIds.map((el) => (
             <li key={el}>
-              tweetid: {el}
-              <Tweet />
+              <Tweet id={el}/>
             </li>
           ))}
         </ul>
