@@ -4,23 +4,37 @@ import Nav from "./Navigation";
 import TweetsHome from "./TweetsHome";
 import TweetPage from "./TweetContainer";
 import NewTweet from "./NewTweet";
+import { connect } from 'react-redux';
+import { handleInitialData } from '../actions/shared'
 
 class App extends Component {
+  componentDidMount() {
+    this.props.dispatch(handleInitialData());
+  }
 
   render() {
     return (
       <Router>
         <div>
           <Nav />
-          <Switch>
-            <Route path="/tweet/:id" component={TweetPage} />
-            <Route path="/newTweet" component={NewTweet} />
-            <Route path="/" component={TweetsHome} />
-          </Switch>
+          {
+            this.props.loading === true
+              ? <div>loading...</div>
+              : <Switch>
+                  <Route path="/tweet/:id" component={TweetPage} />
+                  <Route path="/newTweet" component={NewTweet} />
+                  <Route path="/" component={TweetsHome} />
+                </Switch>
+          }
+
         </div>
       </Router>
     )
   }
 }
 
-export default App
+const mapStateToProps = ({ authedUser }) => ({
+  loading: authedUser === null
+})
+
+export default connect(mapStateToProps)(App);
