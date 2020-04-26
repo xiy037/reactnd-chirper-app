@@ -18,3 +18,7 @@ If you feel like there's a major problem, please open an issue to discuss the pr
 ## License
 
 MIT
+
+## website
+
+ https://tylermcginnis.com/projects/redux-twitter/
