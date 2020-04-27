@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Nav from "./Navigation";
 import TweetsHome from "./TweetsHome";
@@ -16,20 +16,22 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div>
+        <Fragment>
           <LoadingBar />
-          <Nav />
-          {
-            this.props.loading === true
-              ? <div>loading...</div>
-              : <Switch>
+          <div className="container">
+            <Nav />
+            {
+              this.props.loading === true
+                ? <div>loading...</div>
+                : <Switch>
                   <Route path="/tweet/:id" component={TweetPage} />
                   <Route path="/newTweet" component={NewTweet} />
                   <Route path="/" component={TweetsHome} />
                 </Switch>
-          }
+            }
 
-        </div>
+          </div>
+        </Fragment>
       </Router>
     )
   }
