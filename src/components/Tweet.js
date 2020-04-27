@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { formatTweet, formatDate } from '../utils/helpers';
 import { connect } from 'react-redux';
 import { TiArrowBackOutline, TiHeartOutline, TiHeartFullOutline } from 'react-icons/ti';
@@ -25,10 +25,10 @@ class Tweet extends React.Component {
   render() {
     const { tweet } = this.props;
     const {
-      name, avatar, timestamp, text, hasLiked, likes, replies, parent
+      name, avatar, timestamp, text, hasLiked, likes, replies, id, parent
     } = tweet
     return (
-      <NavLink to="/tweet/123">
+      <Link to={`/tweet/${id}`}>
 
         {tweet && (
           <div className="tweet">
@@ -62,7 +62,7 @@ class Tweet extends React.Component {
           </div>
         )}
 
-      </NavLink>
+      </Link>
     )
   }
 }
