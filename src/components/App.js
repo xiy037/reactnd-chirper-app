@@ -5,7 +5,8 @@ import TweetsHome from "./TweetsHome";
 import TweetPage from "./TweetContainer";
 import NewTweet from "./NewTweet";
 import { connect } from 'react-redux';
-import { handleInitialData } from '../actions/shared'
+import { handleInitialData } from '../actions/shared';
+import LoadingBar from 'react-redux-loading'
 
 class App extends Component {
   componentDidMount() {
@@ -16,6 +17,7 @@ class App extends Component {
     return (
       <Router>
         <div>
+          <LoadingBar />
           <Nav />
           {
             this.props.loading === true

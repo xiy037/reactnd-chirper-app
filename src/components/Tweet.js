@@ -2,7 +2,8 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { formatTweet, formatDate } from '../utils/helpers';
 import { connect } from 'react-redux';
-import { TiArrowBackOutline, TiHeartOutline, TiHeartFullOutline } from 'react-icons/ti'
+import { TiArrowBackOutline, TiHeartOutline, TiHeartFullOutline } from 'react-icons/ti';
+import { handleToggleTweet } from '../actions/tweets'
 
 class Tweet extends React.Component {
 
@@ -13,7 +14,12 @@ class Tweet extends React.Component {
 
   handleLike = (e) => {
     e.preventDefault();
-    //todo
+    const { tweet, authedUser } = this.props;
+    this.props.dispatch(handleToggleTweet({
+      id: tweet.id,
+      hasLiked: tweet.hasLiked,
+      authedUser
+    }));
   }
 
   render() {
@@ -21,7 +27,6 @@ class Tweet extends React.Component {
     const {
       name, avatar, timestamp, text, hasLiked, likes, replies, parent
     } = tweet
-    console.log(this.props);
     return (
       <NavLink to="/tweet/123">
 
